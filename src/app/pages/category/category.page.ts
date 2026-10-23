@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
+import { IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonSearchbar, IonTitle, IonToolbar } from '@ionic/angular';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.page.html',
   styleUrls: ['./category.page.scss'],
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonContent, IonHeader, IonSearchbar,IonTitle, IonToolbar, IonFab,IonIcon,IonFabButton,CommonModule, FormsModule]
 })
 export class CategoryPage implements OnInit {
 

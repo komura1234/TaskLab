@@ -4,15 +4,22 @@
         <ion-note slot="end" class="note">pendientes</ion-note>
   </ion-toolbar>
   <ion-toolbar>
-        <ion-searchbar debounce="1000" placeholder="Buscar Tarea" animated="true">
+    @if('task_buscador' | flag){
+         <ion-searchbar debounce="1000" placeholder="Buscar Tarea" animated="true">
 
         </ion-searchbar>
+    }
+     
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
+  @if('task_crear_tarea'| flag){
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="openModalRegister()"><ion-icon name="add"/></ion-fab-button>
   </ion-fab>
+  }
+
   <app-detail-task></app-detail-task>
 </ion-content>

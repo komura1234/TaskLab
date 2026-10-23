@@ -1,9 +1,19 @@
+
 <ion-tabs>
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="home">
+    <ion-tab-button tab="tasks">
       <ion-icon name="create"></ion-icon>
-      Listen Now
+      Tareas
     </ion-tab-button>
+
+
+    @if(remote.activo('task_categorias')){
+      <ion-tab-button tab="category">
+        <ion-icon name="create"></ion-icon>
+        Categorias
+      </ion-tab-button>
+    }
+   
   
   </ion-tab-bar>
 </ion-tabs>

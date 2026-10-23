@@ -6,6 +6,7 @@ import { DetailTaskComponent } from '../../components/detail-task/detail-task.co
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
 import { ModalTaskComponent } from '../../components/modals/modal-task/modal-task.component';
+import { FlagPipe } from '../../shared/pipes/flag-pipe';
 
 @Component({
   selector: 'app-tasks',
@@ -33,10 +34,11 @@ import { ModalTaskComponent } from '../../components/modals/modal-task/modal-tas
     IonIcon,
     CommonModule, 
     FormsModule,
+    FlagPipe,
     DetailTaskComponent]
 })
 export class TasksPage implements OnInit {
-
+  
   constructor(private modalController:ModalController) { 
     addIcons({add})
   }

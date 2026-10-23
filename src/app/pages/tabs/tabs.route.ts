@@ -8,7 +8,7 @@ export const TAB_ROUTES:Routes=[
     component: TabsPage,
     children: [
       {
-        path: 'task',
+        path: 'tasks',
         loadComponent: () => import('../tasks/tasks.page').then((m) => m.TasksPage),
       },
 
@@ -17,11 +17,8 @@ export const TAB_ROUTES:Routes=[
         loadComponent:()=>import('../category/category.page').then((m)=>m.CategoryPage)
       },
       
-      {
-        path: '',
-        redirectTo: '/pages/task',
-        pathMatch: 'full',
-      },
+      {path:'',pathMatch:'full',redirectTo:'tasks'},
+
     ],
   },
 ]
