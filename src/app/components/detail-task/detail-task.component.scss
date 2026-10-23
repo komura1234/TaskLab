@@ -1,0 +1,19 @@
+.campo + .campo{
+    margin-top:12px;
+}
+
+.etiqueta{
+    display:block;
+    font-weight:600;
+    color:var(--ion-color-dark);
+    margin-bottom: 4px;
+}
+
+.campo p{
+    margin:0;
+}
+
+.action{
+    flex:none;
+    margin:-10px 0 0;
+}

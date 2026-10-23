@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancelar</ion-button>
+    </ion-buttons>
+    <ion-title class="text-format">Nueva Tarea</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Guardar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-card>
+   <ion-card-content>
+    <ion-item>
+      <ion-input 
+      class="text-format"
+      label="Titulo" 
+      labelPlacement="stacked" 
+      placeholder="Nombre de la Tarea"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-textarea 
+      class="text-format"
+      label="Descripcion" 
+      labelPlacement="stacked"
+      [autoGrow]="true" 
+      [rows]="2"
+      placeholder="Descripcion de la Tarea"
+      >
+      </ion-textarea>
+    </ion-item>
+   </ion-card-content>
+  
+  </ion-card>
+
+  <ion-text color="medium" >
+    <p class="ion-text-uppercase  ion-padding-start ion-no-margin text-format">Categoria</p>
+  </ion-text>
+
+  <ion-card>
+  <ion-list [inset]="true">
+      <ion-radio-group>
+        <ion-item>
+          <ion-icon slot="start" name="ellipse" color="medium" aria-hidden="true" class="text-format"></ion-icon>
+          <ion-radio justify="space-between" class="text-format">Sin Categoria</ion-radio>
+        </ion-item>
+      </ion-radio-group>
+  </ion-list>
+  </ion-card>
+
+ 
+</ion-content>

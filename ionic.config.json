@@ -1,0 +1,7 @@
+{
+  "name": "task-lab",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
