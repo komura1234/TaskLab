@@ -48,7 +48,7 @@ export class TaskService {
 
       const tasks=actual.some(x=>x.id===item.id)
         ?actual.map(x=>x.id===item.id?limpio:x)
-        :[...actual,limpio];
+        :[limpio,...actual];
       await this.escribir(tasks);
     })
   }
