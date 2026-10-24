@@ -5,50 +5,70 @@
     </ion-buttons>
     <ion-title class="text-format">Nueva Tarea</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="confirm()" [strong]="true">Guardar</ion-button>
+      <ion-button (click)="confirm()" [strong]="true" [disabled]="taskService.cargando()">Guardar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
-  <ion-card>
-   <ion-card-content>
-    <ion-item>
-      <ion-input 
-      class="text-format"
-      label="Titulo" 
-      labelPlacement="stacked" 
-      placeholder="Nombre de la Tarea"
-      ></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-textarea 
-      class="text-format"
-      label="Descripcion" 
-      labelPlacement="stacked"
-      [autoGrow]="true" 
-      [rows]="2"
-      placeholder="Descripcion de la Tarea"
-      >
-      </ion-textarea>
-    </ion-item>
-   </ion-card-content>
-  
-  </ion-card>
-
-  <ion-text color="medium" >
-    <p class="ion-text-uppercase  ion-padding-start ion-no-margin text-format">Categoria</p>
-  </ion-text>
-
-  <ion-card>
-  <ion-list [inset]="true">
-      <ion-radio-group>
-        <ion-item>
-          <ion-icon slot="start" name="ellipse" color="medium" aria-hidden="true" class="text-format"></ion-icon>
-          <ion-radio justify="space-between" class="text-format">Sin Categoria</ion-radio>
+  <ion-content class="ion-padding">
+     <form [formGroup]="form">
+      @if(taskService.error();as err){
+        <ion-text color="danger"><p class="ion-padding-start">{{err}}</p></ion-text>
+      }
+      <ion-card>
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-input 
+          formControlName="titulo"
+          class="text-format"
+          label="Titulo" 
+          labelPlacement="stacked" 
+          placeholder="Nombre de la Tarea"
+          [errorText]="errorMessage('titulo')"
+          [counter]="true"
+          [maxlength]="reglas.titulo.max"
+      
+          ></ion-input>
         </ion-item>
-      </ion-radio-group>
-  </ion-list>
-  </ion-card>
+        <ion-item lines="none">
+          <ion-textarea 
+          formControlName="descripcion"
+          class="text-format"
+          label="Descripcion" 
+          labelPlacement="stacked"
+          [autoGrow]="true" 
+          [rows]="2"
+           [errorText]="errorMessage('descripcion')"
+          placeholder="Descripcion de la Tarea"
+          >
+          </ion-textarea>
+        </ion-item>   
+    
+        
+      </ion-card-content>
+      
+      </ion-card>
 
+      <ion-text color="medium" >
+        <p class="ion-text-uppercase  ion-padding-start ion-no-margin text-format">Categoria</p>
+      </ion-text>
+
+      <ion-card>
+      <ion-list [inset]="true">
+          <ion-radio-group formControlName="categoriaId">
+            <ion-item>
+              <ion-icon slot="start" name="ellipse" color="medium" aria-hidden="true" class="text-format"></ion-icon>
+              <ion-radio justify="space-between" class="text-format">Sin Categoria</ion-radio>
+            </ion-item>
+            @for(c of categoryService.items();track c.id){
+            <ion-item>
+              <ion-icon slot="start" name="ellipse" color="medium" aria-hidden="true" class="text-format"></ion-icon>
+              <ion-radio [value]="c.id" justify="space-between" class="text-format">{{c.nombre}}</ion-radio>
+            </ion-item>
+            }
+
+          </ion-radio-group>
+      </ion-list>
+      </ion-card>
+ </form>
  
 </ion-content>

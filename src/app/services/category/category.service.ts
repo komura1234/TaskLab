@@ -1,6 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { StorageService } from '../../core/storage/storage.service';
-import { Category } from '../../models/category';
+import { Category, esCategory } from '../../models/category';
+import { validarTexto } from '../../shared/validations/reglas';
 
 const key = 'categorys';
 @Injectable({ providedIn: 'root' })
@@ -12,37 +13,56 @@ export class CategoryService {
   readonly cargando = signal(false);
   readonly error = signal<string | null>(null);
 
-  private async ejecutar(accion: () => Promise<void>): Promise<void> {
+  private async ejecutar(accion: () => Promise<void>): Promise<boolean> {
     this.cargando.set(true);
     this.error.set(null);
-    
-    try { await accion(); }
-    catch (e) { this.error.set((e as Error).message); }
+
+    try { await accion(); return true; }
+    catch (e) { this.error.set((e as Error).message); return false; }
     finally { this.cargando.set(false); }
   }
 
-  cargar(): Promise<void> {
+  cargar(): Promise<boolean> {
     return this.ejecutar(async () => this._items.set(await this.leer()));
   }
 
-  guardar(item: Category): Promise<void> {
+  guardar(item: Category): Promise<boolean> {
     return this.ejecutar(async () => {
-      const lista = [...(await this.leer()).filter(x => x.id !== item.id), item];
+      const actual = await this.leer();
+      this.validar(item, actual);
+      const limpio = { ...item, nombre: item.nombre.trim(), descripcion: item.descripcion.trim() };
+      const lista = [...actual.filter(x => x.id !== item.id), limpio];
       await this.storage.guardar(key, JSON.stringify(lista));
       this._items.set(lista);
     });
   }
 
-  eliminar(id: string): Promise<void> {
+  eliminar(id: string): Promise<boolean> {
     return this.ejecutar(async () => {
-      const lista = (await this.leer()).filter(x => x.id !== id);
+      const actual = await this.leer();
+      if (!actual.some(x => x.id === id)) throw new Error('La categoría no existe');
+      const lista = actual.filter(x => x.id !== id);
       await this.storage.guardar(key, JSON.stringify(lista));
       this._items.set(lista);
     });
+  }
+
+  async existe(id: string): Promise<boolean> {
+    return (await this.leer()).some(c => c.id === id);
+  }
+
+  private validar(item: Category, lista: Category[]): void {
+    validarTexto(item.nombre, item.descripcion);
+    const nombre = item.nombre.trim().toLowerCase();
+    if (lista.some(c => c.id !== item.id && c.nombre.trim().toLowerCase() === nombre))
+      throw new Error('Ya existe una categoría con ese nombre');
   }
 
   private async leer(): Promise<Category[]> {
     const raw = await this.storage.leer(key);
-    return raw ? (JSON.parse(raw) as Category[]) : [];
+    if (!raw) return [];
+    const data: unknown = JSON.parse(raw);
+    if (!Array.isArray(data)) throw new Error('Los datos de categorías están corruptos');
+    return data.filter(esCategory);
   }
 }

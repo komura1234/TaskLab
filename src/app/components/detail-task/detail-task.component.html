@@ -1,12 +1,14 @@
+@for(t of tareasService.items(); track t.id){
+
 <ion-card>
 
   <ion-card-content class="ion-display-flex ion-align-items-start">
    
     <ion-checkbox class="ion-margin-end"aria-label="Completar"></ion-checkbox>
    <div class="ion-flex-1 ion-display-flex ion-flex-column">
-    <ion-card-title><h2>Preparar tareas para desarrollo informatico</h2></ion-card-title>
+    <ion-card-title><h2>{{t.titulo}}</h2></ion-card-title>
     <ion-text color="medium">
-      <P>Resumen de historias cerradas y metricas de desempeno</P>
+      <P>{{t.descripcion}}</P>
     </ion-text>
     <ion-chip class="ion-align-self-start ion-no-margin ion-margin-top">Trabajo</ion-chip>
   </div> 
@@ -15,6 +17,10 @@
       <ion-icon  name="ellipsis-horizontal-outline"></ion-icon>
     </ion-button> 
 
+
+   </ion-card-content>
+ </ion-card>
+}
     <ion-action-sheet
       [isOpen]="isActionSheetOpen"
       header="Actins"
@@ -23,5 +29,3 @@
     >
 
     </ion-action-sheet>
-   </ion-card-content>
- </ion-card>

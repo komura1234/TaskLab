@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { IonActionSheet, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonChip, IonIcon, IonLabel, IonText } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {ellipsisHorizontalOutline} from 'ionicons/icons'
+import { TaskService } from '../../services/task/task.service';
 @Component({
   selector: 'app-detail-task',
   templateUrl: './detail-task.component.html',
@@ -10,6 +11,7 @@ import {ellipsisHorizontalOutline} from 'ionicons/icons'
 })
 export class DetailTaskComponent  implements OnInit {
   public isActionSheetOpen = false;
+  readonly tareasService= inject(TaskService)
   public actionSheetButtons=[
         {
       text: 'Eliminar',
@@ -41,6 +43,10 @@ export class DetailTaskComponent  implements OnInit {
     addIcons({ellipsisHorizontalOutline})
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.tareasService.cargar();
+  }
+
+
 
 }
