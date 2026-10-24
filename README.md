@@ -38,6 +38,12 @@ se creo un archivo .yaml para ejecutar en github actions un workflow para la gen
 
 Los archivos APK e IPA se descargan en los Artifacts de ejecuion. Se obetiene APK en debug y .IPA sin firma
 
+Siga las siguientes instrucciones 
+* Abrir pestana Actions de su fork
+* Pulsar "I understand my workflows,go ahead enable them"
+* Ir a Build APK e IPA -> Run Workflow
+
+
 ### Consideraciones
 Para el manejo de firebase en la funcion de rconfig tener en cuenta el manejo de credenciales definidas en el archivo enviroment tanto .prod y dev localizados en el directorio src/enviroments
 
