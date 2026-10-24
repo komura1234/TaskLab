@@ -1,25 +1,44 @@
 <ion-header>
   <ion-toolbar>
-        <ion-title size="large">Pragma Task</ion-title>
-        <ion-note slot="end" class="note">{{tareasService.pendientes()}} pendientes</ion-note>
+    <ion-title size="large">Pragma Task</ion-title>
+    <ion-note slot="end" class="note">{{ tareasService.pendientes() }} pendientes</ion-note>
   </ion-toolbar>
-  <ion-toolbar>
-    @if('task_buscador' | flag){
-         <ion-searchbar debounce="1000" placeholder="Buscar Tarea" animated="true">
-
-        </ion-searchbar>
-    }
-     
-  </ion-toolbar>
+  @if ('task_buscador' | flag) {
+    <ion-toolbar>
+      <ion-searchbar placeholder="Buscar por título" [debounce]="300" (ionInput)="buscar($event)"></ion-searchbar>
+    </ion-toolbar>
+    <ion-toolbar>
+      <div class="filtros">
+        <ion-chip [color]="filtroCategoria() === 'todas' ? 'primary' : undefined" (click)="filtroCategoria.set('todas')">Todas</ion-chip>
+        <ion-chip [color]="filtroCategoria() === 'sin' ? 'primary' : undefined" (click)="filtroCategoria.set('sin')">Sin categoría</ion-chip>
+        @for (c of categoryService.items(); track c.id) {
+          <ion-chip [color]="filtroCategoria() === c.id ? 'primary' : undefined" [style.--color]="c.color" (click)="filtroCategoria.set(c.id)">
+            <span class="punto"></span>{{ c.nombre }}
+          </ion-chip>
+        }
+      </div>
+    </ion-toolbar>
+  }
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
-  @if('task_crear_tarea'| flag){
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="openModalRegister()"><ion-icon name="add"/></ion-fab-button>
-  </ion-fab>
+  @if (tareasService.error(); as err) {
+    <ion-text color="danger"><p class="ion-padding-horizontal">{{ err }}</p></ion-text>
   }
 
-  <app-detail-task></app-detail-task>
+  @for (t of filtradas(); track t.id) {
+    <app-detail-task [task]="t" (editar)="openModalRegister($event)" />
+  } @empty {
+    <ion-text color="medium">
+      <p class="ion-text-center ion-padding">
+        {{ tareasService.items().length ? 'No hay tareas que coincidan' : 'Aún no tienes tareas' }}
+      </p>
+    </ion-text>
+  }
+
+  @if ('task_crear_tarea' | flag) {
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+      <ion-fab-button aria-label="Nueva tarea" (click)="openModalRegister()"><ion-icon name="add"/></ion-fab-button>
+    </ion-fab>
+  }
 </ion-content>

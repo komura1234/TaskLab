@@ -17,3 +17,41 @@
     flex:none;
     margin:-10px 0 0;
 }
+
+.titulo,
+.descripcion{
+    transition:color 0.2s ease, opacity 0.2s ease;
+}
+
+.descripcion{
+    margin:4px 0 0;
+}
+
+.completada{
+    .titulo{
+        text-decoration:line-through;
+        color:var(--ion-color-medium);
+    }
+
+    .descripcion{
+        opacity:0.6;
+    }
+}
+
+.chip{
+    display:inline-flex;
+    align-self:flex-start;
+    align-items:center;
+    gap:6px;
+    padding:4px 10px;
+    border-radius:999px;
+    font-size:13px;
+    background:color-mix(in srgb, var(--color) 14%, transparent);
+}
+
+.punto{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--color);
+}

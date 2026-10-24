@@ -1,22 +1,28 @@
 <ion-header>
   <ion-toolbar>
-        <ion-title size="large">Categorias</ion-title>
-        <ion-note slot="end" class="note">registradas</ion-note>
+    <ion-title size="large">Categorías</ion-title>
+    <ion-note slot="end" class="ion-padding-end">{{ categoryService.items().length }} en total</ion-note>
   </ion-toolbar>
   <ion-toolbar>
-         <ion-searchbar debounce="1000" placeholder="Buscar Categoria" animated="true">
-
-        </ion-searchbar>
-    
-     
+    <ion-searchbar placeholder="Buscar categorías" [debounce]="300" (ionInput)="buscar($event)"></ion-searchbar>
   </ion-toolbar>
+  
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content color="light">
+  @if (categoryService.error(); as err) {
+    <ion-text color="danger"><p class="ion-padding-horizontal">{{ err }}</p></ion-text>
+  }
+
+  <app-detail-categorias
+    [categorias]="filtradas()"
+    [filtrando]="!!busqueda()"
+    (editar)="abrirModal($event)"
+  />
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button ><ion-icon name="add"/></ion-fab-button>
+    <ion-fab-button aria-label="Nueva categoría" (click)="abrirModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
   </ion-fab>
-  
-
 </ion-content>

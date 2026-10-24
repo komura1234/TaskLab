@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonIcon, IonTab, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToolbar } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { create } from 'ionicons/icons';
+import { create, pricetag } from 'ionicons/icons';
 import { RemoteService } from '../../core/config/remote-config/remote-service';
 
 @Component({
@@ -15,7 +15,7 @@ import { RemoteService } from '../../core/config/remote-config/remote-service';
 export class TabsPage implements OnInit {
  readonly remote=inject(RemoteService);
   constructor() {
-    addIcons({create})
+    addIcons({create,pricetag})
    }
 
   ngOnInit() {

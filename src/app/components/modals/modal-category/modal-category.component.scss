@@ -1,0 +1,40 @@
+.colores {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 16px;
+}
+
+.color {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color);
+  cursor: pointer;
+
+  &.activo {
+    box-shadow: 0 0 0 2px var(--ion-item-background, #fff), 0 0 0 4px var(--color);
+  }
+}
+
+.previa {
+  padding: 12px 16px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  background: color-mix(in srgb, var(--color) 14%, transparent);
+}
+
+.punto {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color);
+}

@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">Cancelar</ion-button>
+    </ion-buttons>
+    <ion-title>{{ categoria() ? 'Editar categoría' : 'Nueva categoría' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true" [disabled]="categoryService.cargando()">Guardar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+  <form [formGroup]="form" (ngSubmit)="confirm()">
+    @if (categoryService.error(); as err) {
+      <ion-text color="danger"><p class="ion-padding-horizontal">{{ err }}</p></ion-text>
+    }
+
+    <ion-list [inset]="true">
+      <ion-item lines="none">
+        <ion-input
+          formControlName="nombre"
+          label="Nombre *"
+          labelPlacement="stacked"
+          placeholder="Ej. Trabajo"
+          [counter]="true"
+          [maxlength]="reglas.titulo.max"
+          [errorText]="errorMessage()"
+        ></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <p class="titulo-seccion">Color</p>
+    <ion-list [inset]="true">
+      <div class="colores" role="radiogroup" aria-label="Color">
+        @for (c of colores; track c) {
+          <button
+            type="button"
+            role="radio"
+            class="color"
+            [style.--color]="c"
+            [class.activo]="form.controls.color.value === c"
+            [attr.aria-checked]="form.controls.color.value === c"
+            [attr.aria-label]="'Color ' + c"
+            (click)="seleccionarColor(c)"
+          ></button>
+        }
+      </div>
+    </ion-list>
+
+    <p class="titulo-seccion">Vista previa</p>
+    <ion-list [inset]="true">
+      <div class="previa">
+        <span class="chip" [style.--color]="previa().color">
+          <span class="punto"></span>{{ previa().nombre }}
+        </span>
+      </div>
+    </ion-list>
+  </form>
+</ion-content>

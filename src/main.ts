@@ -10,7 +10,7 @@ import { RemoteService } from './app/core/config/remote-config/remote-service';
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideIonicAngular({mode:'ios'}),
+    provideIonicAngular({mode:'ios', useSetInputAPI:true}),
     provideRouter(routes, withPreloading(PreloadAllModules), withComponentInputBinding()),
     provideAppInitializer(()=>inject(RemoteService).inciarBanderas()),
   ],

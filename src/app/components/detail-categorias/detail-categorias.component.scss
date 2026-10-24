@@ -1,0 +1,10 @@
+.icono {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--color);
+  background: color-mix(in srgb, var(--color) 14%, transparent);
+}

@@ -8,6 +8,7 @@ describe('DetailCategoriasComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DetailCategoriasComponent);
+    fixture.componentRef.setInput('categorias', []);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

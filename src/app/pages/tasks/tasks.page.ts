@@ -1,7 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonList, IonNote, IonRow, IonSearchbar, IonText, IonTitle, IonToolbar, ModalController, ToastController } from '@ionic/angular';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { IonChip, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonNote, IonSearchbar, IonText, IonTitle, IonToolbar, ModalController, ToastController } from '@ionic/angular';
 import { DetailTaskComponent } from '../../components/detail-task/detail-task.component';
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
@@ -9,64 +7,74 @@ import { ModalTaskComponent } from '../../components/modals/modal-task/modal-tas
 import { FlagPipe } from '../../shared/pipes/flag-pipe';
 import { Task } from '../../models/task';
 import { TaskService } from '../../services/task/task.service';
+import { CategoryService } from '../../services/category/category.service';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.page.html',
   styleUrls: ['./tasks.page.scss'],
-  imports: [IonContent, 
-    IonHeader, 
-    IonGrid,
-    IonCol,
+  imports: [IonContent,
+    IonHeader,
     IonNote,
     IonSearchbar,
-    IonRow,
-    IonTitle, 
+    IonTitle,
     IonToolbar,
-    IonCard, 
-    IonCardTitle,
     IonText,
     IonChip,
-    IonList,
-    IonCardSubtitle,
-    IonCardHeader,
-    IonCardContent,
     IonFab,
     IonFabButton,
     IonIcon,
-    CommonModule, 
-    FormsModule,
     FlagPipe,
     DetailTaskComponent]
 })
 export class TasksPage implements OnInit {
-   private toastController=inject(ToastController);
-   readonly tareasService=inject(TaskService)
-  constructor(private modalController:ModalController) { 
+  private readonly modalController=inject(ModalController);
+  private readonly toastController=inject(ToastController);
+  readonly tareasService=inject(TaskService)
+  readonly categoryService=inject(CategoryService)
+  readonly busqueda=signal('');
+  readonly filtroCategoria=signal<string>('todas');
+
+  readonly filtradas=computed(()=>{
+    const q=this.busqueda().trim().toLowerCase();
+    const f=this.filtroCategoria();
+    return this.tareasService.items()
+      .filter(t=>f==='todas' || (f==='sin' ? t.categoriaId===null : t.categoriaId===f))
+      .filter(t=>!q || t.titulo.toLowerCase().includes(q))
+      .sort((a,b)=>Number(a.completada)-Number(b.completada));
+  });
+
+  constructor() {
     addIcons({add})
   }
 
   ngOnInit() {
+    this.tareasService.cargar();
+    this.categoryService.cargar();
   }
 
+  buscar(ev:Event){
+    this.busqueda.set((ev as CustomEvent).detail.value ?? '');
+  }
 
   async openModalRegister(task?:Task) {
     const modal = await this.modalController.create({
       component: ModalTaskComponent,
+      componentProps: { task: task ?? null },
+      presentingElement: document.querySelector('ion-tabs') ?? undefined,
     });
-    modal.present();
+    await modal.present();
 
-    const { data, role } = await modal.onWillDismiss();
+    const { role } = await modal.onWillDismiss();
 
     if(role === 'confirm'){
       const toast= await this.toastController.create({
-        message:task?'Tarea acutalizada':'Tarea Creada',
+        message:task?'Tarea actualizada':'Tarea creada',
         color:'success',
         duration:1500
-    })
-      toast.present();
+      })
+      await toast.present();
     }
-    
   }
 
 }

@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-button color="medium" (click)="cancel()">Cancelar</ion-button>
     </ion-buttons>
-    <ion-title class="text-format">Nueva Tarea</ion-title>
+    <ion-title class="text-format">{{ task() ? 'Editar Tarea' : 'Nueva Tarea' }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="confirm()" [strong]="true" [disabled]="taskService.cargando()">Guardar</ion-button>
     </ion-buttons>
@@ -57,11 +57,11 @@
           <ion-radio-group formControlName="categoriaId">
             <ion-item>
               <ion-icon slot="start" name="ellipse" color="medium" aria-hidden="true" class="text-format"></ion-icon>
-              <ion-radio justify="space-between" class="text-format">Sin Categoria</ion-radio>
+              <ion-radio [value]="null" justify="space-between" class="text-format">Sin Categoria</ion-radio>
             </ion-item>
             @for(c of categoryService.items();track c.id){
             <ion-item>
-              <ion-icon slot="start" name="ellipse" color="medium" aria-hidden="true" class="text-format"></ion-icon>
+              <ion-icon slot="start" name="ellipse" [style.color]="c.color" aria-hidden="true" class="text-format"></ion-icon>
               <ion-radio [value]="c.id" justify="space-between" class="text-format">{{c.nombre}}</ion-radio>
             </ion-item>
             }

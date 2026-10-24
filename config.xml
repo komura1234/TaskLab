@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.komura.tasklab" version="1.0.0" xmlns="http://www.w3.org/ns/widgets">
+  <name>TaskLab</name>
+  <description>Gestor de tareas</description>
+  <content src="index.html" />
+  <access origin="*" />
+  <preference name="scheme" value="app" />
+  <preference name="hostname" value="localhost" />
+  <preference name="AndroidXEnabled" value="true" />
+</widget>
