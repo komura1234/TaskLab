@@ -17,7 +17,7 @@ export class RemoteService {
 
     async inciarBanderas():Promise<void>{
       this.remoteConfig= getRemoteConfig(initializeApp(environment.firebase));
-      this.remoteConfig.settings.minimumFetchIntervalMillis= environment.production?3_600_000:0;
+      this.remoteConfig.settings.minimumFetchIntervalMillis= environment.production?60_000:0;
       this.remoteConfig.defaultConfig=flags;
 
       try{
@@ -25,7 +25,7 @@ export class RemoteService {
       }catch{}
       this.leer();
       this.escuchar();
-     
+     document.addEventListener('resume',()=>this.refrescar())
       
     }
     private escuchar():void{
@@ -54,5 +54,12 @@ export class RemoteService {
 
     activo(flag:Flag):boolean{
         return this._flags()[flag];
+    }
+
+    async refrescar():Promise<void>{
+        try{
+            await fetchAndActivate(this.remoteConfig);
+            this.leer()
+        }catch{}
     }
 }

@@ -22,6 +22,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="refrescar($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   @if (tareasService.error(); as err) {
     <ion-text color="danger"><p class="ion-padding-horizontal">{{ err }}</p></ion-text>
   }

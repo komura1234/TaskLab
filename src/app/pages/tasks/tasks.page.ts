@@ -1,5 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { IonChip, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonNote, IonSearchbar, IonText, IonTitle, IonToolbar, ModalController, ToastController } from '@ionic/angular';
+import { IonChip, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonNote, IonRefresher, IonRefresherContent, IonSearchbar, IonText, IonTitle, IonToolbar, ModalController, ToastController } from '@ionic/angular';
 import { DetailTaskComponent } from '../../components/detail-task/detail-task.component';
 import { addIcons } from 'ionicons';
 import { add } from 'ionicons/icons';
@@ -8,6 +8,7 @@ import { FlagPipe } from '../../shared/pipes/flag-pipe';
 import { Task } from '../../models/task';
 import { TaskService } from '../../services/task/task.service';
 import { CategoryService } from '../../services/category/category.service';
+import { RemoteService } from '../../core/config/remote-config/remote-service';
 
 @Component({
   selector: 'app-tasks',
@@ -24,6 +25,8 @@ import { CategoryService } from '../../services/category/category.service';
     IonFab,
     IonFabButton,
     IonIcon,
+    IonRefresher,
+    IonRefresherContent,
     FlagPipe,
     DetailTaskComponent]
 })
@@ -32,6 +35,7 @@ export class TasksPage implements OnInit {
   private readonly toastController=inject(ToastController);
   readonly tareasService=inject(TaskService)
   readonly categoryService=inject(CategoryService)
+  private readonly remote=inject(RemoteService)
   readonly busqueda=signal('');
   readonly filtroCategoria=signal<string>('todas');
 
@@ -55,6 +59,13 @@ export class TasksPage implements OnInit {
 
   buscar(ev:Event){
     this.busqueda.set((ev as CustomEvent).detail.value ?? '');
+  }
+
+  async refrescar(ev:Event){
+    await Promise.all([
+      this.remote.refrescar()
+    ]);
+    (ev as CustomEvent).detail.complete()
   }
 
   async openModalRegister(task?:Task) {
