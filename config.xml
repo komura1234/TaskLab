@@ -9,13 +9,14 @@
   <preference name="AndroidXEnabled" value="true" />
 
   <platform name="android">
-    <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi" />
-    <icon src="resources/android/icon/drawable-mdpi-icon.png" density="mdpi" />
-    <icon src="resources/android/icon/drawable-hdpi-icon.png" density="hdpi" />
-    <icon src="resources/android/icon/drawable-xhdpi-icon.png" density="xhdpi" />
-    <icon src="resources/android/icon/drawable-xxhdpi-icon.png" density="xxhdpi" />
-    <icon src="resources/android/icon/drawable-xxxhdpi-icon.png" density="xxxhdpi" />
-    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/android/icon/drawable-xxxhdpi-icon.png" />
+    <resource-file src="resources/android/values/tasklab_colors.xml" target="/app/src/main/res/values/tasklab_colors.xml" />
+    <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" foreground="resources/android/icon/ldpi-foreground.png" background="@color/tasklab_icon_background" />
+    <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" foreground="resources/android/icon/mdpi-foreground.png" background="@color/tasklab_icon_background" />
+    <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" foreground="resources/android/icon/hdpi-foreground.png" background="@color/tasklab_icon_background" />
+    <icon density="xhdpi" src="resources/android/icon/drawable-xhdpi-icon.png" foreground="resources/android/icon/xhdpi-foreground.png" background="@color/tasklab_icon_background" />
+    <icon density="xxhdpi" src="resources/android/icon/drawable-xxhdpi-icon.png" foreground="resources/android/icon/xxhdpi-foreground.png" background="@color/tasklab_icon_background" />
+    <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi-icon.png" foreground="resources/android/icon/xxxhdpi-foreground.png" background="@color/tasklab_icon_background" />
+    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/android/icon/xxxhdpi-foreground.png" />
     <preference name="AndroidWindowSplashScreenBackground" value="#0C0C13" />
   </platform>
 
