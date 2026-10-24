@@ -1,3 +1,9 @@
+:host{
+    display:block;
+    content-visibility:auto;
+    contain-intrinsic-size:auto 160px;
+}
+
 .campo + .campo{
     margin-top:12px;
 }
@@ -25,6 +31,7 @@
 
 .descripcion{
     margin:4px 0 0;
+    color:var(--ion-color-medium);
 }
 
 .completada{

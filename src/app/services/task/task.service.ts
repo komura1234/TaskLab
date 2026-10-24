@@ -13,6 +13,7 @@ export class TaskService {
   readonly items=this._items.asReadonly()
   readonly cargando=signal(false);
   readonly error= signal<string | null>(null);
+  private cargado=false;
   readonly pendientes=computed(()=>this._items().filter(t=>!t.completada).length)
 
 
@@ -32,7 +33,10 @@ export class TaskService {
       finally{this.cargando.set(false)}
   }
   cargar(): Promise<boolean> {
-    return this.ejecutar(async () => this._items.set(await this.leer()));
+    return this.ejecutar(async () => {
+      this._items.set(await this.leer());
+      this.cargado=true;
+    });
   }
 
   guardar(item:Task):Promise<boolean>{
@@ -40,7 +44,7 @@ export class TaskService {
 
       await this.validar(item);
       const limpio={...item,titulo:item.titulo.trim(),descripcion:item.descripcion.trim()};
-      const actual=await this.leer();
+      const actual=await this.actual();
 
       const tasks=actual.some(x=>x.id===item.id)
         ?actual.map(x=>x.id===item.id?limpio:x)
@@ -51,7 +55,7 @@ export class TaskService {
 
   eliminar(id:string):Promise<boolean>{
     return this.ejecutar(async()=>{
-      const actual=await this.leer();
+      const actual=await this.actual();
 
       if(!actual.some(x=>x.id===id)) throw new Error('La tarea no existe');
       await this.escribir(actual.filter(x=>x.id!==id));
@@ -61,7 +65,7 @@ export class TaskService {
   alternarCompletada(id:string):Promise<boolean>{
     return this.ejecutar(async()=>{
 
-      await this.escribir((await this.leer()).map(x=>x.id===id?{...x,completada:!x.completada}:x));
+      await this.escribir((await this.actual()).map(x=>x.id===id?{...x,completada:!x.completada}:x));
     })
   }
 
@@ -70,14 +74,22 @@ export class TaskService {
 
       if(categoriaId!==null && !(await this.categoryService.existe(categoriaId)))
         throw new Error('La categoría seleccionada no existe');
-      await this.escribir((await this.leer()).map(x=>x.id===id?{...x,categoriaId}:x));
+      await this.escribir((await this.actual()).map(x=>x.id===id?{...x,categoriaId}:x));
     })
   }
 
   quitarCategoria(categoriaId:string):Promise<boolean>{
     return this.ejecutar(async()=>{
-      await this.escribir((await this.leer()).map(x=>x.categoriaId===categoriaId?{...x,categoriaId:null}:x));
+      await this.escribir((await this.actual()).map(x=>x.categoriaId===categoriaId?{...x,categoriaId:null}:x));
     })
+  }
+
+  private async actual():Promise<Task[]>{
+    if(!this.cargado){
+      this._items.set(await this.leer());
+      this.cargado=true;
+    }
+    return this._items();
   }
 
   private async escribir(tasks:Task[]):Promise<void>{

@@ -8,27 +8,17 @@
     ></ion-checkbox>
 
     <div class="ion-flex-1 ion-display-flex ion-flex-column">
-
-
       <ion-card-title><h2 class="titulo">{{ task().titulo }}</h2></ion-card-title>
       @if (task().descripcion) {
-        <ion-text color="medium"><p class="descripcion">{{ task().descripcion }}</p></ion-text>
+        <p class="descripcion">{{ task().descripcion }}</p>
       }
       @if (categoria(); as c) {
         <span class="chip ion-margin-top" [style.--color]="c.color"><span class="punto"></span>{{ c.nombre }}</span>
       }
     </div>
 
-    <ion-button class="action" (click)="setOpen(true)" size="small" aria-label="Opciones" fill="clear" color="primary">
+    <ion-button class="action" (click)="opciones.emit(task())" size="small" aria-label="Opciones" fill="clear" color="primary">
       <ion-icon slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>
     </ion-button>
-    
   </ion-card-content>
 </ion-card>
-
-<ion-action-sheet
-  [isOpen]="isActionSheetOpen"
-  [header]="task().titulo"
-  [buttons]="actionSheetButtons"
-  (didDismiss)="onAction($event)"
-></ion-action-sheet>
