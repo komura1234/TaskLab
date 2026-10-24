@@ -2,7 +2,6 @@ import { Service, signal } from '@angular/core';
 import {initializeApp} from 'firebase/app';
 import{activate, fetchAndActivate, getBoolean, getRemoteConfig, onConfigUpdate, RemoteConfig} from 'firebase/remote-config'
 import { environment } from '../../../../environments/environment';
-
 const flags={
     task_categorias:true,
     task_crear_tarea:true,
