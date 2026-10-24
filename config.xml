@@ -7,4 +7,20 @@
   <preference name="scheme" value="app" />
   <preference name="hostname" value="localhost" />
   <preference name="AndroidXEnabled" value="true" />
+
+  <platform name="android">
+    <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi" />
+    <icon src="resources/android/icon/drawable-mdpi-icon.png" density="mdpi" />
+    <icon src="resources/android/icon/drawable-hdpi-icon.png" density="hdpi" />
+    <icon src="resources/android/icon/drawable-xhdpi-icon.png" density="xhdpi" />
+    <icon src="resources/android/icon/drawable-xxhdpi-icon.png" density="xxhdpi" />
+    <icon src="resources/android/icon/drawable-xxxhdpi-icon.png" density="xxxhdpi" />
+    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/android/icon/drawable-xxxhdpi-icon.png" />
+    <preference name="AndroidWindowSplashScreenBackground" value="#0C0C13" />
+  </platform>
+
+  <platform name="ios">
+    <icon src="resources/ios/icon/icon-1024.png" width="1024" height="1024" />
+    <splash src="resources/ios/splash/Default@2x~universal~anyany.png" />
+  </platform>
 </widget>
