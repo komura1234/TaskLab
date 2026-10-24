@@ -1,7 +1,7 @@
 <h1 align="center">Task Lab</h1>
 
 
-##Descripcion del Proyecto
+## Descripcion del Proyecto
 
 <p align="justify">
 Aplicacion movil practica para crear y gestionar tareas. Crear y gestionar categorias
@@ -9,6 +9,14 @@ Aplicacion movil practica para crear y gestionar tareas. Crear y gestionar categ
 </p>
 
 ---
+
+### Stack
+
+* Nodejs 20 o 22
+* Ionic v9
+* Cordova
+* Firebase
+* Angular 22
 
 ## Instalacion
 
@@ -26,6 +34,11 @@ Aplicacion movil practica para crear y gestionar tareas. Crear y gestionar categ
 ```
 
 ### Generar Archivos de Compilacion
-se creo un archivo .yaml para ejecutar  en github actions un workflow para la generacion de archivo APK y .IPA sin firma usando cordova. 
+se creo un archivo .yaml para ejecutar en github actions un workflow para la generacion de archivo APK y .IPA sin firma usando cordova. Realizar fork del repo.El archivo se localiza en .github/workflows.
+
+Los archivos APK e IPA se descargan en los Artifacts de ejecuion. Se obetiene APK en debug y .IPA sin firma
+
+### Consideraciones
+Para el manejo de firebase en la funcion de rconfig tener en cuenta el manejo de credenciales definidas en el archivo enviroment tanto .prod y dev localizados en el directorio src/enviroments
 
 
